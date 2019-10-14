@@ -1,10 +1,13 @@
+import {generateFreePixel} from "./utils/helper";
+
 const UP = 'up';
 const DOWN = 'down';
 const LEFT = 'left';
 const RIGHT = 'right';
+const walls = false;
 
 const getDefaultState = () => ({
-    speed: 2,
+    speed: 10,
     coords: [{ i: 2, j: 2 }, { i: 2, j: 1 }, { i: 2, j: 0 }],
     feed: [{ i: 0, j: 0 }],
     direction: DOWN
@@ -14,12 +17,11 @@ const SNAKE_COLOR = 'green';
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-let lastRender = 0;
 
 const displayHeight = 100;
 const width = canvas.width;
 const height = canvas.height - displayHeight;
-const cellWidth = 50;
+const cellWidth = 70;
 const lineWidth = cellWidth / 10;
 
 const rows = Math.floor(height / cellWidth);
@@ -32,21 +34,9 @@ let state = getDefaultState();
 
 const getScore = () => state.coords.length - 3;
 
-const isEqualPixels = (p1, p2) => p1.i === p2.i && p1.j === p2.j;
+const isPixelsEqual = (p1, p2) => p1.i === p2.i && p1.j === p2.j;
 
-const generateFeed = () => {
-    const { coords, feed } = state;
-    let pixel;
-    do {
-        pixel = {
-            i: Math.floor(Math.random() * columns),
-            j: Math.floor(Math.random() * rows)
-        };
-    } while ([...coords, ...feed].some(p => isEqualPixels(p, pixel)));
-    return pixel;
-};
-
-const update = (progress = 0) => {
+const update = () => {
     const { coords, direction, feed } = state;
     const head = coords[0];
     const tag = coords[coords.length - 1];
@@ -65,22 +55,31 @@ const update = (progress = 0) => {
             break;
         case RIGHT:
             lookahead = { i: head.i + 1, j: head.j };
+            break;
         default:
-    }
+    };
 
-    const crash =
-        body.some(f => isEqualPixels(f, lookahead)) ||
-        lookahead.i < 0 ||
-        lookahead.i >= columns ||
-        lookahead.j < 0 ||
-        lookahead.j >= rows;
-    if (crash) {
+    if (body.some(f => isPixelsEqual(f, lookahead))) {
         state = getDefaultState();
         return;
     }
-    const eaten = feed.find(f => isEqualPixels(f, lookahead));
+
+    if (lookahead.i < 0 ||
+        lookahead.i >= columns ||
+        lookahead.j < 0 ||
+        lookahead.j >= rows) {
+        if (walls) {
+            state = getDefaultState();
+            return;
+        } else {
+            lookahead.i = (lookahead.i + columns) % columns;
+            lookahead.j = (lookahead.j + rows) % rows;
+        }
+    }
+
+    const eaten = feed.find(f => isPixelsEqual(f, lookahead));
     if (eaten) {
-        state.feed = [...feed.filter(f => f !== eaten), generateFeed()];
+        state.feed = [...feed.filter(f => f !== eaten), generateFreePixel([...coords, ...feed], rows, columns)];
         state.coords = [lookahead, head, ...body, tag];
     } else {
         state.coords = [lookahead, head, ...body];
@@ -164,24 +163,13 @@ const draw = () => {
     drawScore();
 };
 
-const loop = timestamp => {
-    var progress = timestamp - lastRender;
-
-    if (Math.floor((lastRender / 1000) * state.speed) !== Math.floor((timestamp / 1000) * state.speed)) {
-        update(progress);
-        draw();
-    }
-
-    lastRender = timestamp;
-    window.requestAnimationFrame(loop);
-};
-
-const init = () => {
+const loop = () => {
+    update();
     draw();
-    window.requestAnimationFrame(loop);
+    setTimeout(loop, 1000 / state.speed);
 };
 
-window.onkeydown = e => {
+const keyPressHandler = e => {
     const { direction } = state;
     switch (e.code) {
         case 'ArrowDown':
@@ -202,6 +190,12 @@ window.onkeydown = e => {
             return;
         default:
     }
+};
+
+const init = () => {
+    window.onkeydown = keyPressHandler;
+    draw();
+    loop();
 };
 
 init();
