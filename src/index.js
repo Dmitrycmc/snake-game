@@ -1,4 +1,4 @@
-import {generateFreePixel} from "./utils/helper";
+import { generateFreePixel } from './utils/helper';
 import './index.css';
 
 const UP = 'up';
@@ -58,17 +58,14 @@ const update = () => {
             lookahead = { i: head.i + 1, j: head.j };
             break;
         default:
-    };
+    }
 
     if (body.some(f => isPixelsEqual(f, lookahead))) {
         state = getDefaultState();
         return;
     }
 
-    if (lookahead.i < 0 ||
-        lookahead.i >= columns ||
-        lookahead.j < 0 ||
-        lookahead.j >= rows) {
+    if (lookahead.i < 0 || lookahead.i >= columns || lookahead.j < 0 || lookahead.j >= rows) {
         if (walls) {
             state = getDefaultState();
             return;

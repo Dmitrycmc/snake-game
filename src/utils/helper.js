@@ -1,6 +1,6 @@
 const range = n => [...Array(n)].map((i, j) => j);
 
-const buildHashFunction = columns => ({i, j}) => j * columns + i;
+const buildHashFunction = columns => ({ i, j }) => j * columns + i;
 
 const buildReverseHashFunction = columns => hash => ({
     i: hash % columns,
