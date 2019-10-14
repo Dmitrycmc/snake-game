@@ -1,5 +1,10 @@
 import { generateFreePixel } from './utils/helper';
 import './index.css';
+import pickSound from './assets/sounds/pick.wav';
+import hitSound from './assets/sounds/hit.wav';
+
+const pickAudio = new Audio(pickSound);
+const hitAudio = new Audio(hitSound);
 
 const UP = 'up';
 const DOWN = 'down';
@@ -61,12 +66,14 @@ const update = () => {
     }
 
     if (body.some(f => isPixelsEqual(f, lookahead))) {
+        hitAudio.play();
         state = getDefaultState();
         return;
     }
 
     if (lookahead.i < 0 || lookahead.i >= columns || lookahead.j < 0 || lookahead.j >= rows) {
         if (walls) {
+            hitAudio.play();
             state = getDefaultState();
             return;
         } else {
@@ -77,6 +84,7 @@ const update = () => {
 
     const eaten = feed.find(f => isPixelsEqual(f, lookahead));
     if (eaten) {
+        pickAudio.play();
         state.feed = [...feed.filter(f => f !== eaten), generateFreePixel([...coords, ...feed], rows, columns)];
         state.coords = [lookahead, head, ...body, tag];
     } else {
