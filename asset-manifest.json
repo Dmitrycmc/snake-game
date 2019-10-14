@@ -1,0 +1,9 @@
+{
+  "main.js": "/snake-game/static/js/main.1800212f.chunk.js",
+  "main.js.map": "/snake-game/static/js/main.1800212f.chunk.js.map",
+  "runtime~main.js": "/snake-game/static/js/runtime~main.356adb96.js",
+  "runtime~main.js.map": "/snake-game/static/js/runtime~main.356adb96.js.map",
+  "index.html": "/snake-game/index.html",
+  "precache-manifest.2eacabb2625e2b6b47491b1c13234ffc.js": "/snake-game/precache-manifest.2eacabb2625e2b6b47491b1c13234ffc.js",
+  "service-worker.js": "/snake-game/service-worker.js"
+}
