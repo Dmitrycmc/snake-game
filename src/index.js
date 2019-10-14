@@ -1,4 +1,5 @@
 import {generateFreePixel} from "./utils/helper";
+import './index.css';
 
 const UP = 'up';
 const DOWN = 'down';
@@ -150,7 +151,7 @@ const drawFeed = () => {
 
 const drawScore = () => {
     ctx.fillStyle = 'green';
-    ctx.font = '30px Arial';
+    ctx.font = '80px Digital';
     ctx.textBaseline = 'middle';
     ctx.fillText(`Score: ${getScore()}`, 20, height + displayHeight / 2);
 };
