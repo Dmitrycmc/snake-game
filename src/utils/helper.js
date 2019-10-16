@@ -21,3 +21,5 @@ export const generateFreePixel = (excludedPixels, rows, columns) => {
 
     return getPixel(hash);
 };
+
+export const isPixelsEqual = (p1, p2) => p1.i === p2.i && p1.j === p2.j;
