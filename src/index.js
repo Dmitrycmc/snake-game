@@ -47,23 +47,23 @@ const loop = () => {
 };
 
 const keyPressHandler = e => {
-    const { direction } = state;
+    const { snakeDirection } = state;
     switch (e.code) {
         case 'ArrowDown':
         case 'KeyS':
-            if (direction !== UP) state.direction = DOWN;
+            if (snakeDirection !== UP) state.lastDirection = DOWN;
             return;
         case 'ArrowUp':
         case 'KeyW':
-            if (direction !== DOWN) state.direction = UP;
+            if (snakeDirection !== DOWN) state.lastDirection = UP;
             return;
         case 'ArrowLeft':
         case 'KeyA':
-            if (direction !== RIGHT) state.direction = LEFT;
+            if (snakeDirection !== RIGHT) state.lastDirection = LEFT;
             return;
         case 'ArrowRight':
         case 'KeyD':
-            if (direction !== LEFT) state.direction = RIGHT;
+            if (snakeDirection !== LEFT) state.lastDirection = RIGHT;
             return;
         default:
     }

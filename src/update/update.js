@@ -10,21 +10,22 @@ const getDefaultState = () => ({
     speed: 5,
     coords: [{ i: 2, j: 2 }, { i: 2, j: 1 }, { i: 2, j: 0 }],
     feed: [{ i: 0, j: 0 }],
-    direction: DOWN,
+    snakeDirection: DOWN,
+    lastDirection: RIGHT,
     walls: false
 });
 
 const update = (viewParams, state) => {
     if (!state) return getDefaultState();
 
-    const { coords, direction, feed } = state;
+    const { coords, lastDirection, feed } = state;
     const { columns, rows } = viewParams;
     const head = coords[0];
     const tag = coords[coords.length - 1];
     const body = coords.slice(1, -1);
 
     let lookahead;
-    switch (direction) {
+    switch (lastDirection) {
         case UP:
             lookahead = { i: head.i, j: head.j - 1 };
             break;
@@ -39,6 +40,8 @@ const update = (viewParams, state) => {
             break;
         default:
     }
+
+    state.snakeDirection = lastDirection;
 
     if (body.some(f => isPixelsEqual(f, lookahead))) {
         hitAudio.play();
