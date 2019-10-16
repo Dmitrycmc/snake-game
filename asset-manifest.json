@@ -1,9 +1,14 @@
 {
-  "main.js": "/snake-game/static/js/main.1800212f.chunk.js",
-  "main.js.map": "/snake-game/static/js/main.1800212f.chunk.js.map",
+  "main.css": "/snake-game/static/css/main.aefb7221.chunk.css",
+  "main.js": "/snake-game/static/js/main.8ae82b82.chunk.js",
+  "main.js.map": "/snake-game/static/js/main.8ae82b82.chunk.js.map",
   "runtime~main.js": "/snake-game/static/js/runtime~main.356adb96.js",
   "runtime~main.js.map": "/snake-game/static/js/runtime~main.356adb96.js.map",
   "index.html": "/snake-game/index.html",
-  "precache-manifest.2eacabb2625e2b6b47491b1c13234ffc.js": "/snake-game/precache-manifest.2eacabb2625e2b6b47491b1c13234ffc.js",
-  "service-worker.js": "/snake-game/service-worker.js"
+  "precache-manifest.89c9a6df9b433601b12c6e223d5726e2.js": "/snake-game/precache-manifest.89c9a6df9b433601b12c6e223d5726e2.js",
+  "service-worker.js": "/snake-game/service-worker.js",
+  "static/css/main.aefb7221.chunk.css.map": "/snake-game/static/css/main.aefb7221.chunk.css.map",
+  "static/media/index.css": "/snake-game/static/media/digital-7 (mono).58045dab.ttf",
+  "static/media/hit.wav": "/snake-game/static/media/hit.fe22c65d.wav",
+  "static/media/pick.wav": "/snake-game/static/media/pick.0e7d342a.wav"
 }
