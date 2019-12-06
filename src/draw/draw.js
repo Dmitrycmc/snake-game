@@ -10,12 +10,16 @@ const draw = (ctx, viewParams, state) => {
 
     switch (state.scene) {
         case 'menu':
+            drawSnake(ctx, viewParams, state);
+            drawFeed(ctx, viewParams, state);
             drawMenu(ctx, viewParams, state);
             break;
-        default:
+        case 'game':
             drawSnake(ctx, viewParams, state);
             drawFeed(ctx, viewParams, state);
             drawDisplay(ctx, viewParams, state);
+            break;
+        default:
     }
 };
 

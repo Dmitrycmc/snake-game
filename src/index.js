@@ -42,10 +42,22 @@ const viewParams = {
     fps
 };
 
-let state = { scene: 'menu', menuIndex: 0, initialized: false };
+const defaultState = {
+    scene: 'menu',
+    menuIndex: 0,
+    speed: 5,
+    coords: [{ i: 2, j: 2 }, { i: 2, j: 1 }, { i: 2, j: 0 }],
+    feed: [{ i: 0, j: 0 }],
+    snakeDirection: DOWN,
+    lastDirection: RIGHT,
+    walls: false,
+    initialized: true
+};
+
+let state = defaultState;
 
 const loop = () => {
-    state = update(viewParams, state);
+    state = update(viewParams, state) || defaultState;
     draw(ctx, viewParams, state);
     setTimeout(loop, 1000 / (state.scene === 'menu' ? fps : state.speed));
 };
@@ -61,11 +73,16 @@ const keyPressHandler = e => {
             case 'KeyW':
             case 'ArrowLeft':
             case 'KeyA':
-                state.menuIndex = 1 - state.menuIndex;
+                state = {...state, menuIndex: 1 - state.menuIndex};
                 return;
             case 'Space':
             case 'Enter':
-                state.scene = state.menuIndex === 0 ? 'game' : 'scores';
+                if (state.menuIndex === 0 ) {
+                    state = {...state, scene: 'game'};
+                } else {
+                    state = {...state, scene: 'scores'};
+                }
+                return;
             default:
         }
     } else {
@@ -73,19 +90,19 @@ const keyPressHandler = e => {
         switch (e.code) {
             case 'ArrowDown':
             case 'KeyS':
-                if (snakeDirection !== UP) state.lastDirection = DOWN;
+                if (snakeDirection !== UP) state={...state, lastDirection: DOWN};
                 return;
             case 'ArrowUp':
             case 'KeyW':
-                if (snakeDirection !== DOWN) state.lastDirection = UP;
+                if (snakeDirection !== DOWN) state={...state, lastDirection: UP};
                 return;
             case 'ArrowLeft':
             case 'KeyA':
-                if (snakeDirection !== RIGHT) state.lastDirection = LEFT;
+                if (snakeDirection !== RIGHT) state={...state, lastDirection: LEFT};
                 return;
             case 'ArrowRight':
             case 'KeyD':
-                if (snakeDirection !== LEFT) state.lastDirection = RIGHT;
+                if (snakeDirection !== LEFT) state={...state, lastDirection: RIGHT};
                 return;
             default:
         }

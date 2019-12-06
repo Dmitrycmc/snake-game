@@ -6,16 +6,6 @@ import hitSound from '../assets/sounds/hit.wav';
 const pickAudio = new Audio(pickSound);
 const hitAudio = new Audio(hitSound);
 
-const getDefaultState = () => ({
-    speed: 5,
-    coords: [{ i: 2, j: 2 }, { i: 2, j: 1 }, { i: 2, j: 0 }],
-    feed: [{ i: 0, j: 0 }],
-    snakeDirection: DOWN,
-    lastDirection: RIGHT,
-    walls: false,
-    initialized: true
-});
-
 const askName = () => {
     const name = window.prompt('Enter your name:', localStorage.name || 'Unnamed hero');
     localStorage.name = name;
@@ -24,7 +14,6 @@ const askName = () => {
 
 const update = (viewParams, state) => {
     if (state.scene === 'menu') return state;
-    if (!state.initialized) return getDefaultState();
 
     const { coords, lastDirection, feed } = state;
     const { columns, rows } = viewParams;
@@ -49,13 +38,13 @@ const update = (viewParams, state) => {
         default:
     }
 
-    state.snakeDirection = lastDirection;
+    state={...state, snakeDirection: lastDirection};
 
     /// self crash
     if (body.some(f => isPixelsEqual(f, lookahead))) {
         hitAudio.play();
         askName();
-        return getDefaultState();
+        return null;
     }
 
     if (lookahead.i < 0 || lookahead.i >= columns || lookahead.j < 0 || lookahead.j >= rows) {
@@ -63,7 +52,7 @@ const update = (viewParams, state) => {
         if (state.walls) {
             hitAudio.play();
             askName();
-            return getDefaultState();
+            return null
         } else {
             lookahead.i = (lookahead.i + columns) % columns;
             lookahead.j = (lookahead.j + rows) % rows;
