@@ -111,22 +111,3 @@ const keyPressHandler = e => {
 
 window.onkeydown = keyPressHandler;
 loop();
-
-const url1 = new URL('https://snake-game-backend.glitch.me/api/records');
-url1.searchParams.append('level', 1);
-fetch(url1.href)
-    .then(response => response.json())
-    .then(response => console.log(response))
-    .catch(result => console.log(result));
-
-const url2 = new URL('https://snake-game-backend.glitch.me/api/records');
-url2.searchParams.append('name', 'Oleg');
-url2.searchParams.append('score', 123);
-url2.searchParams.append('level', 1);
-fetch(url2.href, {
-    method: 'POST',
-    body: JSON.stringify({ name: '123', score: 12, level: 2 })
-})
-    .then(response => response.json())
-    .then(response => console.log(response))
-    .catch(result => console.log(result));

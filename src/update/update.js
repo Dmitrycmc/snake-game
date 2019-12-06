@@ -2,6 +2,7 @@ import { generateFreePixel, isPixelsEqual } from '../utils/helper';
 import { DOWN, LEFT, RIGHT, UP } from '../constants/directions';
 import pickSound from '../assets/sounds/pick.wav';
 import hitSound from '../assets/sounds/hit.wav';
+import { postScoreResult } from './helpers';
 
 const pickAudio = new Audio(pickSound);
 const hitAudio = new Audio(hitSound);
@@ -9,7 +10,9 @@ const hitAudio = new Audio(hitSound);
 const askName = state => {
     const name = window.prompt('Enter your name:', localStorage.name || 'Unnamed hero');
     localStorage.name = name;
-    alert('Congratulation! You earned ' + (state.coords.length - 3) + ' scores');
+    const score = state.coords.length - 3;
+    postScoreResult({ name, level: 1, score });
+    alert(`Congratulation, ${name}! You earned ${score} scores`);
 };
 
 const update = (viewParams, state) => {
