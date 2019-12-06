@@ -5,6 +5,7 @@ const drawDisplay = (ctx, viewParams, state) => {
     ctx.fillStyle = 'green';
     ctx.font = '80px Digital';
     ctx.textBaseline = 'middle';
+    ctx.textAlign = 'left';
     ctx.fillText(`Score: ${getScore(state)}`, 20, height + displayHeight / 2);
 };
 

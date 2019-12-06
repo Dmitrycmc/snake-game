@@ -2,13 +2,21 @@ import fillBackground from './background';
 import drawSnake from './snake';
 import drawFeed from './feed';
 import drawDisplay from './display';
+import drawMenu from './menu';
 
 const draw = (ctx, viewParams, state) => {
     ctx.clearRect(0, 0, viewParams.width, viewParams.height);
     fillBackground(ctx, viewParams);
-    drawSnake(ctx, viewParams, state);
-    drawFeed(ctx, viewParams, state);
-    drawDisplay(ctx, viewParams, state);
+
+    switch (state.scene) {
+        case 'menu':
+            drawMenu(ctx, viewParams, state);
+            break;
+        default:
+            drawSnake(ctx, viewParams, state);
+            drawFeed(ctx, viewParams, state);
+            drawDisplay(ctx, viewParams, state);
+    }
 };
 
 export default draw;
