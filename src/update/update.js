@@ -6,10 +6,10 @@ import hitSound from '../assets/sounds/hit.wav';
 const pickAudio = new Audio(pickSound);
 const hitAudio = new Audio(hitSound);
 
-const askName = () => {
+const askName = state => {
     const name = window.prompt('Enter your name:', localStorage.name || 'Unnamed hero');
     localStorage.name = name;
-    alert('Congratulation');
+    alert('Congratulation! You earned ' + (state.coords.length - 3) + ' scores');
 };
 
 const update = (viewParams, state) => {
@@ -38,12 +38,12 @@ const update = (viewParams, state) => {
         default:
     }
 
-    state={...state, snakeDirection: lastDirection};
+    state = { ...state, snakeDirection: lastDirection };
 
     /// self crash
     if (body.some(f => isPixelsEqual(f, lookahead))) {
         hitAudio.play();
-        askName();
+        askName(state);
         return null;
     }
 
@@ -51,8 +51,8 @@ const update = (viewParams, state) => {
         /// wall crash
         if (state.walls) {
             hitAudio.play();
-            askName();
-            return null
+            askName(state);
+            return null;
         } else {
             lookahead.i = (lookahead.i + columns) % columns;
             lookahead.j = (lookahead.j + rows) % rows;
