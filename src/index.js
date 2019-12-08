@@ -2,6 +2,7 @@ import './index.css';
 import draw from './draw/draw';
 import update from './update/update';
 import { DOWN, LEFT, RIGHT, UP } from './constants/directions';
+import { getScoresList } from './update/helpers';
 
 const SNAKE_COLOR = 'green';
 
@@ -56,14 +57,28 @@ const defaultState = {
 
 let state = defaultState;
 
+const getFps = () => {
+    switch (state.scene) {
+        case 'game':
+            return state.speed;
+        case 'menu':
+            return viewParams.fps;
+        case 'scores':
+            return 0.01;
+        default:
+            return fps;
+    }
+};
+
 const loop = () => {
     state = update(viewParams, state) || defaultState;
     draw(ctx, viewParams, state);
-    setTimeout(loop, 1000 / (state.scene === 'menu' ? fps : state.speed));
+    setTimeout(loop, 1000 / getFps());
 };
 
 const keyPressHandler = e => {
     if (state.scene === 'menu') {
+        const { menuIndex } = state;
         switch (e.code) {
             case 'ArrowDown':
             case 'KeyS':
@@ -73,14 +88,16 @@ const keyPressHandler = e => {
             case 'KeyW':
             case 'ArrowLeft':
             case 'KeyA':
-                state = { ...state, menuIndex: 1 - state.menuIndex };
+                state = { ...state, menuIndex: 1 - menuIndex };
                 return;
             case 'Space':
             case 'Enter':
-                if (state.menuIndex === 0) {
+                if (menuIndex === 0) {
                     state = { ...state, scene: 'game', feed: [{ i: 6, j: 2 }] };
                 } else {
-                    state = { ...state, scene: 'scores' };
+                    getScoresList(1, scoresList => {
+                        state = { ...state, scene: 'scores', scoresList };
+                    });
                 }
                 return;
             default:

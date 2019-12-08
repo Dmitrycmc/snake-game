@@ -1,6 +1,6 @@
 import requestBuilder from '../utils/api-utils';
 
-export const getScoreResult = ({ level }, onSuccess, onFailure) => {
+export const getScoresList = (level, onSuccess, onFailure) => {
     requestBuilder('https://snake-game-backend.glitch.me/api/records', { level }, 'GET', onSuccess, onFailure);
 };
 

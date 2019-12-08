@@ -16,7 +16,7 @@ const askName = state => {
 };
 
 const update = (viewParams, state) => {
-    if (state.scene === 'menu') return state;
+    if (state.scene !== 'game') return state;
 
     const { coords, lastDirection, feed } = state;
     const { columns, rows } = viewParams;
