@@ -2,11 +2,11 @@ import { fillPixel, strokePixel } from './pixel';
 
 const drawSnakeMember = (ctx, viewParams, i, j) => {
     strokePixel(ctx, viewParams, i, j, viewParams.SNAKE_COLOR);
-    fillPixel(ctx, viewParams, i, j, viewParams.SNAKE_COLOR);
 };
 
 const drawHead = (ctx, viewParams, i, j) => {
     strokePixel(ctx, viewParams, i, j, viewParams.SNAKE_COLOR);
+    fillPixel(ctx, viewParams, i, j, viewParams.SNAKE_COLOR);
 };
 
 const drawSnake = (ctx, viewParams, state) => {

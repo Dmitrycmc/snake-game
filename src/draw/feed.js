@@ -1,8 +1,7 @@
-import { fillPixel, strokePixel } from './pixel';
+import { strokePixel } from './pixel';
 
 const drawFeedPixel = (ctx, viewParams, i, j) => {
     strokePixel(ctx, viewParams, i, j, 'orange');
-    fillPixel(ctx, viewParams, i, j, 'orange');
 };
 
 const drawFeed = (ctx, viewParams, state) => {

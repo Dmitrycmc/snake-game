@@ -3,16 +3,19 @@ import { DOWN, LEFT, RIGHT, UP } from '../constants/directions';
 import pickSound from '../assets/sounds/pick.wav';
 import hitSound from '../assets/sounds/hit.wav';
 import { postScoreResult } from './helpers';
+import { capitalize, translate } from '../utils/string-utils';
 
 const pickAudio = new Audio(pickSound);
 const hitAudio = new Audio(hitSound);
 
 const askName = state => {
-    const name = window.prompt('Enter your name:', localStorage.name || 'Unnamed hero');
-    localStorage.name = name;
+    const name = window.prompt('Enter your name:', localStorage.name || 'Unnamed hero') || 'Unnamed hero';
+    const translatedName = translate(name.toLowerCase());
+    const capitalizedName = capitalize(translatedName);
+    localStorage.name = capitalizedName;
     const score = state.coords.length - 3;
-    postScoreResult({ name, level: 1, score });
-    alert(`Congratulation, ${name}! You earned ${score} scores`);
+    postScoreResult({ name: capitalizedName, level: 1, score });
+    alert(`Congratulation, ${capitalizedName}! You earned ${score} scores`);
 };
 
 const update = (viewParams, state) => {
